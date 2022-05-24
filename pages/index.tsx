@@ -9,9 +9,15 @@ const Home: NextPage = () => {
   const [routes] = useState(getRoutes());
   const router = useRouter();
 
+  const testApi = async () => {
+    const fillDbRes = await fillDb();
+    console.log(fillDbRes);
+    const queryResponse = await queryDB({ query: 'SELECT * FROM subjects' });
+    console.log(queryResponse);
+  };
+
   useEffect(() => {
-    fillDb().then(console.log);
-    queryDB({ query: 'SELECT * FROM subjects' }).then(console.log);
+    testApi();
   }, []);
 
   return (
