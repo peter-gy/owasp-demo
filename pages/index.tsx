@@ -1,6 +1,5 @@
 import { Button } from '@mantine/core';
 import { fillDb } from '@modules/api/utils/api.util';
-import { initDB } from '@modules/db/utils/setup.util';
 import { getRoutes } from '@modules/routes/utils/route.util';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
