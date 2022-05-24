@@ -8,7 +8,7 @@ export default class _Document extends Document {
 
   render() {
     return (
-      <Html className='bg-primary'>
+      <Html className="bg-primary">
         <Head>
           <link rel="icon" href="/favicon.ico" />
         </Head>
