@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { initUserTable } from '../models/db.user.model';
 import * as pg from 'pg';
+import { initSubjectTable } from '../models/db.subject.model';
 
 /**
  *
@@ -22,5 +23,5 @@ export const sequelize = new Sequelize(
  * @returns
  */
 export async function initDB() {
-  return Promise.all([initUserTable(sequelize)]);
+  return Promise.all([initUserTable(sequelize), initSubjectTable(sequelize)]);
 }
