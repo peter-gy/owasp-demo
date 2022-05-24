@@ -1,12 +1,18 @@
 import { Button } from '@mantine/core';
+import { fillDb } from '@modules/api/utils/api.util';
+import { initDB } from '@modules/db/utils/setup.util';
 import { getRoutes } from '@modules/routes/utils/route.util';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   const [routes] = useState(getRoutes());
   const router = useRouter();
+
+  useEffect(() => {
+    fillDb().then(console.log);
+  }, []);
 
   return (
     <div className="h-screen flex justify-center items-center">

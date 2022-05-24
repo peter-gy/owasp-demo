@@ -4,7 +4,7 @@ import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes }
  *
  */
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
@@ -17,7 +17,7 @@ export class UserModel
   extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>>
   implements User
 {
-  declare id: string;
+  declare id: number;
   declare name: string;
   declare email: string;
   declare password: string;

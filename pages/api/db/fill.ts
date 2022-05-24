@@ -1,10 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { fillWithRandomUsers } from '@modules/db/utils/fill-user.util';
+import { initDB } from '@modules/db/utils/setup.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-type Data = {
-  name: string;
-};
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // initilize the database
+    await initDB();
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  res.status(200).json({ name: 'John Doe' });
+    // fill the database
+    Promise.all([fillWithRandomUsers(5)]);
+
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
 }
