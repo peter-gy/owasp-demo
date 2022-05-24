@@ -1,4 +1,5 @@
 import { ApiEndpoint, BASE as BASE_URL, BaseResponse } from '../types/endpoint.type';
+import { ExecuteSqlQueryPayload } from '../types/payload.type';
 
 /**
  *
@@ -22,5 +23,19 @@ async function baseFetch<T extends BaseResponse<any>>(
  * @returns
  */
 export function fillDb() {
-  return baseFetch<BaseResponse<undefined>>(ApiEndpoint.FillDb);
+  return baseFetch<BaseResponse<undefined>>(ApiEndpoint.FillDb, {
+    method: 'GET'
+  });
+}
+
+/**
+ *
+ * @param payload
+ * @returns
+ */
+export function queryDB(payload: ExecuteSqlQueryPayload) {
+  return baseFetch<BaseResponse<any>>(ApiEndpoint.ExecuteSqlQuery, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
 }

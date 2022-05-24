@@ -1,23 +1,23 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { BaseResponse } from '@modules/api/types/endpoint.type';
-import { fillWithSubjects } from '@modules/db/utils/fill-subject.util';
-import { fillWithRandomUsers } from '@modules/db/utils/fill-user.util';
+import { ExecuteSqlQueryPayload } from '@modules/api/types/payload.type';
 import { initDB } from '@modules/db/utils/setup.util';
 import { executeSQLQuery } from '@modules/db/utils/sql.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<BaseResponse<undefined>>
+  res: NextApiResponse<BaseResponse<any>>
 ) {
   try {
     // initilize the database
     await initDB();
 
-    // fill the database
-    Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
+    // execute they sql query
+    const { query, queryOptions }: ExecuteSqlQueryPayload = JSON.parse(req.body);
+    const [results, _] = await executeSQLQuery(query, queryOptions);
 
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, payload: results as any });
   } catch (err) {
     res.status(500).json({ success: false });
   }

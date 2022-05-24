@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import { fillDb } from '@modules/api/utils/api.util';
+import { fillDb, queryDB } from '@modules/api/utils/api.util';
 import { getRoutes } from '@modules/routes/utils/route.util';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fillDb().then(console.log);
+    queryDB({ query: 'SELECT * FROM subjects' }).then(console.log);
   }, []);
 
   return (
