@@ -1,7 +1,6 @@
-version: "3.9"
+version: '3.9'
 
 services:
-
   app:
     build:
       context: .
@@ -10,13 +9,13 @@ services:
     env_file:
       - .env
     restart: always
-    # Expose the app on port 3001
+    # Expose the app on port 3000
     ports:
-      - "3001:3000"
+      - '3000:3000'
     networks:
-      app-postgres:
+      app-db:
 
-  postgres:
+  db:
     image: postgres:latest
     container_name: owasp-demo-postgres
     env_file:
@@ -24,9 +23,9 @@ services:
     restart: always
     # Expose the db on port 15432 (only meant for db inspection from the host using `psql` or an admin tool)
     ports:
-      - "15432:5432"
+      - '15432:5432'
     networks:
-      app-postgres:
+      app-db:
 
 networks:
-  app-postgres:
+  app-db:
