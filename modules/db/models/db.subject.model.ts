@@ -1,7 +1,7 @@
 import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes } from 'sequelize';
 
 /**
- *
+ * Represents a school subject.
  */
 export interface Subject {
   id: number;
@@ -9,7 +9,7 @@ export interface Subject {
 }
 
 /**
- *
+ * Represents a school subject with `Sequelize` support.
  */
 export class SubjectModel
   extends Model<InferAttributes<SubjectModel>, InferCreationAttributes<SubjectModel>>
@@ -20,8 +20,13 @@ export class SubjectModel
 }
 
 /**
- *
- * @param sequelize
+ * The name of the physical table in the database, storing `SubjectModel`s.
+ */
+export const SUBJECT_TABLE_NAME = 'subjects';
+
+/**
+ * Initializes the physical DB table for `SubjectModel` with the given `Sequelize` instance.
+ * @param sequelize The `Sequelize` instance to use.
  */
 export async function initSubjectTable(sequelize: Sequelize) {
   SubjectModel.init(
@@ -38,7 +43,7 @@ export async function initSubjectTable(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'subjects'
+      tableName: SUBJECT_TABLE_NAME
     }
   );
   await SubjectModel.sync();

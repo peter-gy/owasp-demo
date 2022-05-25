@@ -25,8 +25,8 @@ const subjects = [
 ];
 
 /**
- *
- * @returns
+ * Fills the `subjects` db table with hard-coded data
+ * @returns {Promise<void>}
  */
 export async function fillWithSubjects() {
   return Promise.all(

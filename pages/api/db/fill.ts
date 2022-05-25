@@ -3,7 +3,6 @@ import { BaseResponse } from '@modules/api/types/endpoint.type';
 import { fillWithSubjects } from '@modules/db/utils/fill-subject.util';
 import { fillWithRandomUsers } from '@modules/db/utils/fill-user.util';
 import { initDB } from '@modules/db/utils/setup.util';
-import { executeSQLQuery } from '@modules/db/utils/sql.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
@@ -11,14 +10,17 @@ export default async function handler(
   res: NextApiResponse<BaseResponse<undefined>>
 ) {
   try {
-    // initilize the database
+    // initialize the database
     await initDB();
 
     // fill the database
-    Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
+    await Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
 
     res.status(200).json({ success: true });
   } catch (err) {
-    res.status(500).json({ success: false });
+    console.error(err);
+    // @ts-ignore
+    const message = err.message || 'Something went wrong 🤷‍♂️';
+    res.status(500).json({ success: false, message });
   }
 }

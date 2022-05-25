@@ -1,5 +1,5 @@
 /**
- *
+ * Possible UI routes
  */
 export enum Path {
   Home = '/',
@@ -8,7 +8,7 @@ export enum Path {
 }
 
 /**
- *
+ * Model for a UI route
  */
 export interface Route {
   label: string;

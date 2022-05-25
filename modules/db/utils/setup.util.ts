@@ -2,25 +2,29 @@ import { Sequelize } from 'sequelize';
 import { initUserTable } from '../models/db.user.model';
 import * as pg from 'pg';
 import { initSubjectTable } from '../models/db.subject.model';
+import { POSTGRES_CONFIG } from '@modules/config/config';
+
+const {
+  POSTGRES_DB: database,
+  POSTGRES_USER: username,
+  POSTGRES_PASSWORD: password,
+  POSTGRES_HOST: host,
+  POSTGRES_PORT: port
+} = POSTGRES_CONFIG;
 
 /**
- *
+ * The `Sequelize` instance to be used across the application.
  */
-export const sequelize = new Sequelize(
-  process.env.POSTGRES_DB as string,
-  process.env.POSTGRES_USER as string,
-  process.env.POSTGRES_PASSWORD as string,
-  {
-    host: 'localhost',
-    dialect: 'postgres',
-    port: 15432,
-    dialectModule: pg
-  }
-);
+export const sequelize = new Sequelize(database, username, password, {
+  dialect: 'postgres',
+  dialectModule: pg,
+  host,
+  port
+});
 
 /**
- *
- * @returns
+ * Initialize the database.
+ * @returns { Promise<[void, void]>}
  */
 export async function initDB() {
   return Promise.all([initUserTable(sequelize), initSubjectTable(sequelize)]);

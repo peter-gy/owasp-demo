@@ -1,7 +1,7 @@
 import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes } from 'sequelize';
 
 /**
- *
+ * Represents an app user.
  */
 export interface User {
   id: number;
@@ -11,7 +11,7 @@ export interface User {
 }
 
 /**
- *
+ * Represents an app user with `Sequelize` support.
  */
 export class UserModel
   extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>>
@@ -24,8 +24,13 @@ export class UserModel
 }
 
 /**
- *
- * @param sequelize
+ * The name of the physical table in the database, storing `UserModel`s.
+ */
+export const USER_TABLE_NAME = 'users';
+
+/**
+ * Initializes the physical DB table for `UserModel` with the given `Sequelize` instance.
+ * @param sequelize The `Sequelize` instance to use.
  */
 export async function initUserTable(sequelize: Sequelize) {
   UserModel.init(
@@ -50,7 +55,7 @@ export async function initUserTable(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'users'
+      tableName: USER_TABLE_NAME
     }
   );
   await UserModel.sync();

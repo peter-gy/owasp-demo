@@ -1,8 +1,7 @@
-import { Path } from '../types/route.type';
+import { Path, Route } from '../types/route.type';
 
 /**
- *
- * @returns
+ * @returns all routes except `Home`
  */
 export function getRoutes() {
   return Object.keys(Path)
@@ -14,11 +13,11 @@ export function getRoutes() {
 }
 
 /**
- *
- * @param path
- * @returns
+ * Retrieves the route info based on the supplied `Path`
+ * @param path the path to retrieve the route info for
+ * @returns the `Route` corresponding to the supplied `Path`
  */
-export function getRoute(path: Path) {
+export function getRoute(path: Path): Route {
   switch (path) {
     case Path.Home:
       return {

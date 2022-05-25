@@ -1,11 +1,14 @@
-import { ApiEndpoint, BASE as BASE_URL, BaseResponse } from '../types/endpoint.type';
+import { ApiEndpoint, BaseResponse } from '../types/endpoint.type';
 import { ExecuteSqlQueryPayload } from '../types/payload.type';
+import { API_CONFIG } from '@modules/config/config';
+
+const { API_BASE_URL: BASE_URL } = API_CONFIG;
 
 /**
- *
- * @param endpoint
- * @param options
- * @returns
+ * Utility function to fetch a specific endpoint.
+ * @param endpoint The endpoint to fetch.
+ * @param options The options to pass to the fetch call.
+ * @returns The response from the fetch call.
  */
 async function baseFetch<T extends BaseResponse<any>>(
   endpoint: ApiEndpoint,
@@ -19,8 +22,8 @@ async function baseFetch<T extends BaseResponse<any>>(
 }
 
 /**
- *
- * @returns
+ * Utility function to populate the database with random data.
+ * @returns A `BaseResponse` object, containing the result of the operation.
  */
 export function fillDb() {
   return baseFetch<BaseResponse<undefined>>(ApiEndpoint.FillDb, {
@@ -29,9 +32,9 @@ export function fillDb() {
 }
 
 /**
- *
- * @param payload
- * @returns
+ * Utility function to execute a raw SQL query.
+ * @param payload The payload specifying the query to be executed.
+ * @returns A `BaseResponse` object, containing the result of the operation.
  */
 export function queryDB(payload: ExecuteSqlQueryPayload) {
   return baseFetch<BaseResponse<any>>(ApiEndpoint.ExecuteSqlQuery, {

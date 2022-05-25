@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<BaseResponse<any>>
 ) {
   try {
-    // initilize the database
+    // initialize the database
     await initDB();
 
     // execute they sql query
@@ -19,6 +19,9 @@ export default async function handler(
 
     res.status(200).json({ success: true, payload: results as any });
   } catch (err) {
-    res.status(500).json({ success: false });
+    console.error(err);
+    // @ts-ignore
+    const message = err.message || 'Something went wrong 🤷‍♂️';
+    res.status(500).json({ success: false, message });
   }
 }
