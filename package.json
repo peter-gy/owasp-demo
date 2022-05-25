@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json --ignore-path ./.prettierignore",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json,yml}' --config ./.prettierrc.json --ignore-path ./.prettierignore",
     "build:docker": "docker-compose build",
     "start:docker": "docker-compose up -d"
   },
