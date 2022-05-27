@@ -4,7 +4,7 @@ import { fillWithSubjects } from '@modules/db/utils/fill-subject.util';
 import { fillWithRandomUsers } from '@modules/db/utils/fill-user.util';
 import { initDB } from '@modules/db/utils/setup.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {queryDB} from "@modules/api/utils/api.util";
+import { queryDB } from '@modules/api/utils/api.util';
 
 export default async function handler(
   req: NextApiRequest,
