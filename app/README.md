@@ -2,16 +2,6 @@
 
 Please be nice and `yarn format` before committing.
 
-## Docker Stuff
-
-You can spin up a local dev environment with Next.js and Postgres by executing the following command:
-
-```
-yarn build:docker && yarn start:docker
-```
-
-The Postgres instance will be exposed through port `15432`, the Next.js app through port `3000`.
-
 ## Next.js Stuff
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped
@@ -19,7 +9,7 @@ with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/
 
 ### Getting Started
 
-In order to have access to the Postgres instance in development mode, start it using `docker-compose`:
+To have access to the Postgres instance in development mode, start it using `docker-compose`:
 
 ```shell
 docker-compose up db
