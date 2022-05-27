@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useFetch from "./useFetch";
+import ReactJson from 'react-json-view'
 
 const UNPROTECTED_URL =
   "http://localhost:3000/api/broken-access/cors-allow-all";
@@ -11,7 +12,7 @@ function App() {
   const onUnprotectedClick = () => setSelectedUrl(UNPROTECTED_URL);
   const onProtectedClick = () => setSelectedUrl(PROTECTED_URL);
   return (
-    <h1 className="h-screen text-white text-4xl flex flex-col justify-center items-center">
+    <h1 className="min-h-[100vh] text-white text-4xl flex flex-col justify-center items-center">
       <div className="flex">
         <div className="p-2">
           <button className="btn btn-secondary" onClick={onUnprotectedClick}>
@@ -24,7 +25,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="mt-4 p-4 w-[85vw] h-[45vh] border-2 border-dashed rounded-lg flex flex-col justify-start items-center">
+      <div className="mt-4 p-4 w-[85vw] min-h-[35vh] border-2 border-dashed rounded-lg flex flex-col justify-start items-center">
         {selectedUrl && <FetchResult url={selectedUrl} />}
         {!selectedUrl && (
           <div className="text-lg font-bold">Waiting for action...</div>
@@ -41,9 +42,7 @@ function FetchResult({ url }: { url: string }) {
       <h3 className="font-code">{url}</h3>
       {isLoading && <div className="font-bold"> </div>}
       {data && (
-        <p className="mt-8 text-base font-code text-center">
-          {JSON.stringify(data, null, 2)}
-        </p>
+          <div className='mt-4'><ReactJson src={data} theme='summerfruit:inverted' /></div>
       )}
       {hasError && (
         <div className="mt-8 text-yellow-300 text-justify">{errorMessage}</div>
