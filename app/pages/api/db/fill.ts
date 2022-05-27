@@ -17,10 +17,11 @@ export default async function handler(
     // Check if this has been called before
     const countResult = await queryDB({ query: 'SELECT COUNT(*) FROM users' });
     const count = countResult.payload[0].count;
-    if (count === '0') return;
 
-    // fill the database
-    await Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
+    // fill the database if it is empty
+    if (count === '0') {
+      await Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
+    }
 
     res.status(200).json({ success: true });
   } catch (err) {
