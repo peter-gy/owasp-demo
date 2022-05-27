@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-function constructFetchUrl(
-  baseUrl: string,
-  params: Record<string, string>
-): string {
+function constructFetchUrl(baseUrl: string, params: Record<string, string>): string {
   const queryString = Object.keys(params)
-    .map(
-      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-    )
-    .join("&");
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
   return `${baseUrl}?${queryString}`;
 }
 
@@ -20,7 +15,7 @@ function useFetch(
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [error, setError] = useState<Error | null>(null);
 
   // The encoded url to be fetched
@@ -36,14 +31,12 @@ function useFetch(
           setIsLoading(false);
           setHasError(false);
         } else {
-          setErrorMessage(
-            errorMessageGetter ? errorMessageGetter(json) : "Error"
-          );
+          setErrorMessage(errorMessageGetter ? errorMessageGetter(json) : 'Error');
           setHasError(true);
           setIsLoading(false);
         }
       } catch (error) {
-          setError(error as Error);
+        setError(error as Error);
         setErrorMessage((error as Error).message);
         setHasError(true);
       } finally {
@@ -55,7 +48,7 @@ function useFetch(
     setData(null);
     setIsLoading(true);
     setHasError(false);
-    setErrorMessage("");
+    setErrorMessage('');
     fetchData();
   }, [url, fetchUrl]);
 
