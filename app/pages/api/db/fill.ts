@@ -4,6 +4,7 @@ import { fillWithSubjects } from '@modules/db/utils/fill-subject.util';
 import { fillWithRandomUsers } from '@modules/db/utils/fill-user.util';
 import { initDB } from '@modules/db/utils/setup.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import {queryDB} from "@modules/api/utils/api.util";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,6 +13,11 @@ export default async function handler(
   try {
     // initialize the database
     await initDB();
+
+    // Check if this has been called before
+    const countResult = await queryDB({ query: 'SELECT COUNT(*) FROM users' });
+    const count = countResult.payload[0].count;
+    if (count === '0') return;
 
     // fill the database
     await Promise.all([fillWithRandomUsers(5), fillWithSubjects()]);
