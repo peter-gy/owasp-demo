@@ -3,6 +3,7 @@ import { Button, Notification, TextInput } from '@mantine/core';
 import { X } from 'tabler-icons-react';
 import dynamic from 'next/dynamic';
 import { findUserById, queryDB } from '@modules/api/utils/api.util';
+import Head from 'next/head';
 
 const ReactJson = dynamic(
   () => import('react-json-view'),
@@ -11,16 +12,21 @@ const ReactJson = dynamic(
 
 export default function SqlInjectionPage() {
   return (
-    <div className="min-h-[100vh] p-4 flex bg-primary justify-around items-center">
-      <BadPracticeExample />
-      <GoodPracticeExample />
-    </div>
+    <>
+      <Head>
+        <title>SQL Injection</title>
+      </Head>
+      <div className="h-screen p-4 flex bg-primary justify-around items-start">
+        <BadPracticeExample />
+        <GoodPracticeExample />
+      </div>
+    </>
   );
 }
 
 function ExampleLayout({ title, children }: PropsWithChildren<{ title: string }>) {
   return (
-    <div className="min-h-[95vh] w-[45vw] border-2 border-white rounded-md bg-blue-50 p-4">
+    <div className="h-[95vh] w-[45vw] border-2 border-white rounded-md bg-blue-50 p-4">
       <h2 className="mb-2 text-center text-xl font-bold">{title}</h2>
       {children}
     </div>
@@ -68,7 +74,7 @@ function BadPracticeExample() {
         <TextInput
           placeholder="ID Query"
           label="User ID"
-          description="Search for user by ID"
+          description="Search for a user by ID"
           value={queryParam}
           onChange={(event) => setQueryParam(event.currentTarget.value)}
         />
@@ -83,7 +89,7 @@ function BadPracticeExample() {
           </div>
         )}
         {queryResult && (
-          <div className="m-y-2">
+          <div className="m-y-2 max-h-[65vh] overflow-scroll">
             <ReactJson src={queryResult} />
           </div>
         )}
@@ -94,10 +100,12 @@ function BadPracticeExample() {
 
 function GoodPracticeExample() {
   const [queryParam, setQueryParam] = useState<string | undefined>(undefined);
+  const [rawQuery, setRawQuery] = useState<string | undefined>(undefined);
   const [queryResult, setQueryResult] = useState<any | null>(null);
   const [notification, setNotification] = useState<string | undefined>(undefined);
 
   const handleSubmit = () => {
+    setRawQuery('Query constructed by Sequelize ORM');
     findUserById({ id: queryParam as unknown as number })
       .then((result) => {
         setQueryResult(result);
@@ -108,7 +116,7 @@ function GoodPracticeExample() {
   };
 
   return (
-    <ExampleLayout title="Safe Example">
+    <ExampleLayout title="Secure Example">
       <div className="my-4">
         {notification && (
           <Notification
@@ -124,7 +132,7 @@ function GoodPracticeExample() {
         <TextInput
           placeholder="ID Query"
           label="User ID"
-          description="Search for user by ID"
+          description="Search for a user by ID"
           value={queryParam}
           onChange={(event) => setQueryParam(event.currentTarget.value)}
         />
@@ -133,8 +141,13 @@ function GoodPracticeExample() {
             Submit
           </Button>
         </div>
+        {rawQuery && (
+          <div className="my-2">
+            <p className="font-code">{rawQuery}</p>
+          </div>
+        )}
         {queryResult && (
-          <div className="m-y-2">
+          <div className="m-y-2 max-h-[65vh] overflow-scroll">
             <ReactJson src={queryResult} />
           </div>
         )}
