@@ -46,7 +46,7 @@ function FetchResult({ url }: { url: string }) {
   return (
     <div className="p-2 flex flex-col justify-center items-center text-sm sm:text-lg">
       <h3 className="font-code">{url}</h3>
-      {isLoading && <div className="font-bold"> </div>}
+      {isLoading && <div className="font-bold"></div>}
       {data && (
         <div className="mt-4">
           <ReactJson src={data} theme="summerfruit:inverted" />

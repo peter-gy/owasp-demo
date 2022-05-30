@@ -1,4 +1,4 @@
-import { Model, Sequelize, DataTypes, InferAttributes, InferCreationAttributes } from 'sequelize';
+import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from 'sequelize';
 
 /**
  * Represents a school subject.

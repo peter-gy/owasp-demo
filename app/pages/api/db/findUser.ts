@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { BaseResponse } from '@modules/api/types/endpoint.type';
-import { FindUserByIdPayload } from '@modules/api/types/payload.type';
 import { initDB } from '@modules/db/utils/setup.util';
 import { findUserById } from '@modules/db/utils/sql.util';
 import type { NextApiRequest, NextApiResponse } from 'next';
