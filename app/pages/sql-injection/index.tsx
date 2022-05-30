@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Button, TextInput, Notification } from '@mantine/core';
+import { Button, Notification, TextInput } from '@mantine/core';
 import { X } from 'tabler-icons-react';
 import dynamic from 'next/dynamic';
-import { queryDB } from '@modules/api/utils/api.util';
+import { findUserById, queryDB } from '@modules/api/utils/api.util';
 
 const ReactJson = dynamic(
   () => import('react-json-view'),
@@ -13,6 +13,7 @@ export default function SqlInjectionPage() {
   return (
     <div className="min-h-[100vh] p-4 flex bg-primary justify-around items-center">
       <BadPracticeExample />
+      <GoodPracticeExample />
     </div>
   );
 }
@@ -32,7 +33,9 @@ function BadPracticeExample() {
   const [queryResult, setQueryResult] = useState<any | null>(null);
   const [notification, setNotification] = useState<string | undefined>(undefined);
   // No sanitization
-  const createVulnerableQuery = (query: string) => `SELECT * FROM users WHERE id = ${query}`;
+  const createVulnerableQuery = (query: string) => `SELECT *
+                                                      FROM users
+                                                      WHERE id = ${query}`;
   const handleSubmit = () => {
     if (queryParam) {
       const query = createVulnerableQuery(queryParam);
@@ -79,6 +82,57 @@ function BadPracticeExample() {
             <p className="font-code">{rawQuery}</p>
           </div>
         )}
+        {queryResult && (
+          <div className="m-y-2">
+            <ReactJson src={queryResult} />
+          </div>
+        )}
+      </div>
+    </ExampleLayout>
+  );
+}
+
+function GoodPracticeExample() {
+  const [queryParam, setQueryParam] = useState<string | undefined>(undefined);
+  const [queryResult, setQueryResult] = useState<any | null>(null);
+  const [notification, setNotification] = useState<string | undefined>(undefined);
+
+  const handleSubmit = () => {
+    findUserById({ id: queryParam as unknown as number })
+      .then((result) => {
+        setQueryResult(result);
+      })
+      .catch((error) => {
+        setNotification(error.message);
+      });
+  };
+
+  return (
+    <ExampleLayout title="Safe Example">
+      <div className="my-4">
+        {notification && (
+          <Notification
+            icon={<X size={18} />}
+            color="red"
+            onClose={() => setNotification(undefined)}
+          >
+            {notification}
+          </Notification>
+        )}
+      </div>
+      <div className="flex flex-col space-y-2">
+        <TextInput
+          placeholder="ID Query"
+          label="User ID"
+          description="Search for user by ID"
+          value={queryParam}
+          onChange={(event) => setQueryParam(event.currentTarget.value)}
+        />
+        <div>
+          <Button color="green" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </div>
         {queryResult && (
           <div className="m-y-2">
             <ReactJson src={queryResult} />
