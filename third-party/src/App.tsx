@@ -41,7 +41,7 @@ function FetchResult({ url }: { url: string }) {
       <h3 className="font-code">{url}</h3>
       {isLoading && <div className="font-bold"> </div>}
       {data && (
-          <div className="mt-4 max-h-[65vh] overflow-scroll">
+        <div className="mt-4 max-h-[65vh] overflow-scroll">
           <ReactJson src={data} theme="summerfruit:inverted" />
         </div>
       )}
