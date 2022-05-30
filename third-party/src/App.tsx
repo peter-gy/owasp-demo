@@ -26,7 +26,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="mt-4 p-4 w-[85vw] min-h-[35vh] border-2 border-dashed rounded-lg flex flex-col justify-start items-center">
+      <div className="mt-4 p-4 w-[85vw] h-[75vh] min-h-[35vh] border-2 border-dashed rounded-lg flex flex-col justify-start items-center">
         {selectedUrl && <FetchResult url={selectedUrl} />}
         {!selectedUrl && <div className="text-lg font-bold">Waiting for action...</div>}
       </div>
@@ -41,7 +41,7 @@ function FetchResult({ url }: { url: string }) {
       <h3 className="font-code">{url}</h3>
       {isLoading && <div className="font-bold"> </div>}
       {data && (
-        <div className="mt-4">
+          <div className="mt-4 max-h-[65vh] overflow-scroll">
           <ReactJson src={data} theme="summerfruit:inverted" />
         </div>
       )}

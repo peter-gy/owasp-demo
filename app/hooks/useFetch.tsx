@@ -54,4 +54,5 @@ function useFetch(
 
   return { data, isLoading, hasError, errorMessage, error };
 }
+
 export default useFetch;
