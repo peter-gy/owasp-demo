@@ -1,5 +1,7 @@
 # OWASP Demo
 
+This demo was created for the course "Informationssicherheit" from the University of Vienna.
+
 ## Getting started
 
 You can spin up the whole stack with the following command:
